@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -23,3 +24,11 @@ def dobro(valor:int):
 def area_retangulo(largura:int,altura:int = 1):
     area = altura * largura
     return {'area': area}
+
+
+class Produtos(BaseModel):
+    nome: str
+    valor: float
+@app.post('/produtos')
+def produto(produto: Produtos):
+    return {'mensage':f'Produtos ({produto.nome} e o valor {produto.valor}) cadastrado com sucesso'}
